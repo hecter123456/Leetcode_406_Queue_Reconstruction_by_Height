@@ -15,21 +15,16 @@ class unitest(unittest.TestCase):
         ans = [[5,0], [7,0], [5,2], [6,1], [4,4], [7,1]]
         self.assertEqual(Solution().reconstructQueue(people),ans);
 class Solution():
+    def my_key(self,people):
+        return -people[0],people[1]
     def reconstructQueue(self, people):
         if(people == []):
             return people
-        people = sorted(people, key=itemgetter(1,0))
-        dictionary = defaultdict(int);
+        people.sort(key=Solution().my_key)
+        answer = []
         for person in people:
-            checksum = 0
-            for key,value in dictionary.items():
-                if key >= person[0]:
-                    checksum += value
-            dictionary[person[0]] += 1
-            if checksum != person[1]:
-                people.remove(person)
-                people.insert(person[1],person)
-        return people
+            answer.insert(person[1],person)
+        return answer
 
 if __name__ == '__main__':
     unittest.main()
